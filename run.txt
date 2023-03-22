@@ -1,6 +1,6 @@
 conda activate apex
-G:
-cd G:\APEX_AIMBOT-master
+
+cd 
 python apex.py
 
 
