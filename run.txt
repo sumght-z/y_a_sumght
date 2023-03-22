@@ -1,0 +1,8 @@
+conda activate apex
+G:
+cd G:\APEX_AIMBOT-master
+python apex.py
+
+
+
+pyinstaller --upx-dir G:\APEX_AIMBOT-master\upx-4.0.2-win64 --clean apex.spec
