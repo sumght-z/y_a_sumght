@@ -15,8 +15,8 @@ class ApexAimBot(AimBot):
 
 if __name__ == '__main__':
     my_computer_name = socket.getfqdn(socket.gethostname())
-    if(my_computer_name!="DESKTOP-TOKPF8U.ctc" and my_computer_name!="DESKTOP-PPI9OGB"):
-        sys.exit()
+    # if(my_computer_name!="DESKTOP-TOKPF8U.ctc" and my_computer_name!="DESKTOP-PPI9OGB"):
+    #     sys.exit()
     multiprocessing.freeze_support()
     apex = ApexAimBot(config_path='configs/apex.yaml', onnx_path='weights/best_apex.onnx', engine_path='weights/best_apex.trt')
     heart_time = time.time()

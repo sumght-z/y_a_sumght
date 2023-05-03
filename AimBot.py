@@ -118,7 +118,7 @@ class AimBot:
     def sort_target(self, boxes, confidences, classes):
         target_sort_list = []
         for box, conf, cls in zip(boxes, confidences, classes):
-            label = self.args.label_list[cls]
+            label = self.args.label_list[0]
             x1, y1, x2, y2 = box.tolist()
             target_x, target_y = (x1 + x2) / 2, (y1 + y2) / 2 - self.args.pos_factor * (y2 - y1)
             move_dis = ((target_x - self.detect_center_x) ** 2 + (target_y - self.detect_center_y) ** 2) ** (1 / 2)
@@ -161,7 +161,7 @@ class AimBot:
                 cv2.putText(img, f'FPS: {fps_track:.2f}', (10, 30), 0, 0.7, (0, 255, 0), 2)
                 # Draw detected targets
                 for xyxy, conf, cls in zip(xyxy_list, conf_list, cls_list):
-                    cls_name = args.label_list[cls]
+                    cls_name = args.label_list[0]
                     x1, y1, x2, y2 = xyxy.tolist()
                     label = f'{cls_name} {conf:.2f}'
                     if conf > args.conf:
@@ -200,7 +200,7 @@ class AimBot:
         #抓取屏幕图像
         img = self.grab_screen()
         #调用engine.inference方法对图像进行推理，返回数字、框、置信度和类别
-        nums, boxes, confidences, classes = self.engine.inference(img)
+        num, boxes, confidences, classes = self.engine.inference(img)
         #调用sort_target方法对目标进行排序
         target_sort_list = self.sort_target(boxes, confidences, classes)
         #调用lock_target方法对目标进行锁定
@@ -208,7 +208,7 @@ class AimBot:
         fps_track = 1/(time.time()-start_time)
         #如果设置了保存截图的参数，就把图像、锁定状态和数字放入q_save队列中
         if self.args.save_screenshot:
-            self.q_save.put([img, self.locking, nums])
+            self.q_save.put([img, self.locking])
         #如果设置了可视化的参数，就把图像、框、置信度、类别、目标排序列表和帧率放入q_visual队列中
         if self.args.visualization:
             self.q_visual.put([img, boxes, confidences, classes, target_sort_list, fps_track])
